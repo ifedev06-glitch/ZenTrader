@@ -38,7 +38,7 @@ export function SideBar({ onLogout }: SidebarProps) {
             className="flex items-center gap-3 text-sm font-medium px-3 py-2 rounded-md hover:bg-gray-700 transition"
           >
             <History className="w-4 h-4 text-blue-400" />
-            Trade History
+            Trade-History
           </Link>
 
          <Link

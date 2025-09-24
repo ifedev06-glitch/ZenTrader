@@ -33,15 +33,20 @@ export async function login(username: string, password: string): Promise<string>
 
 export async function signup(username: string, fullname: string, email: string, password: string) {
   try {
-    const response = await apiClient.post(REGISTER_API, { username, fullname, email, password });
+    const response = await axios.post(`${BACKEND_BASE_URL}${REGISTER_API}`, { username, fullname,email, password });
     console.log("Signup successful:", response.data);
-    return response.data; // could return a success message
+
+    // Only save the token
+    const token = response.data.token;
+    localStorage.setItem("token", token);
+
+    // Return only the token
+    return { token };
   } catch (error: any) {
     console.error("Signup error:", error.response?.data || error.message || error);
     throw new Error(error.response?.data?.message || "Signup failed");
   }
 }
-
 
 export interface TradeDetails {
   tradeServer: string;
@@ -132,15 +137,13 @@ export interface Trade {
   timestamp: string;
 }
 
-// GET: Fetch trade history for logged-in user
 export async function getTrades(): Promise<Trade[]> {
   try {
     const response = await apiClient.get<Trade[]>('/trades');
-    // Ensure we always return an array
-    return Array.isArray(response.data) ? response.data : [];
+    return response.data;
   } catch (error: any) {
     console.error('Fetch trades error:', error.response?.data || error.message || error);
-    return []; // return empty array instead of throwing
+    throw new Error('Failed to fetch trades');
   }
 }
 
