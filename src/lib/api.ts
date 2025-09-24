@@ -136,12 +136,14 @@ export interface Trade {
 export async function getTrades(): Promise<Trade[]> {
   try {
     const response = await apiClient.get<Trade[]>('/trades');
-    return response.data;
+    // Ensure we always return an array
+    return Array.isArray(response.data) ? response.data : [];
   } catch (error: any) {
     console.error('Fetch trades error:', error.response?.data || error.message || error);
-    throw new Error('Failed to fetch trades');
+    return []; // return empty array instead of throwing
   }
 }
+
 
 
 // ---------- BANK DETAILS ----------
