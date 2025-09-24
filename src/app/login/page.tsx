@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState } from "react";
@@ -20,6 +19,9 @@ export default function LoginPage() {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
+
+    // Clear any old JWT to prevent conflicts
+    localStorage.removeItem("token");
 
     try {
       const token = await login(username, password); 
@@ -102,15 +104,15 @@ export default function LoginPage() {
 
         {/* Footer */}
         <div className="mt-6 text-center text-gray-400 text-sm">
-           <p>
-    Don't have an account?{" "}
-    <Link
-      href="/signup"
-      className="text-indigo-500 hover:text-indigo-400 cursor-pointer"
-    >
-      Sign up
-    </Link>
-  </p>
+          <p>
+            Don't have an account?{" "}
+            <Link
+              href="/signup"
+              className="text-indigo-500 hover:text-indigo-400 cursor-pointer"
+            >
+              Sign up
+            </Link>
+          </p>
         </div>
       </div>
     </div>
