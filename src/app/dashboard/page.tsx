@@ -115,12 +115,6 @@ export default function Dashboard() {
               <p className="text-sm font-medium text-white mt-0.5">{tradeDetails.password ? "••••••••" : ""}</p>
             </div>
           </div>
-
-          <div className="pt-1">
-            <button className="px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium rounded shadow transition-all">
-              Change Trading Details
-            </button>
-          </div>
         </div>
 
         {/* 🌟 Trade History */}

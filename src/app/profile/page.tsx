@@ -61,7 +61,7 @@ export default function Profile() {
   };
 
   // Determine subscription status color
-  const subscriptionColor = profile.subscriptionStatus === "ACTIVE" ? "text-green-400 border-green-400" : "text-red-400 border-red-400";
+  const subscriptionColor = profile.subscriptionStatus === "SUBSCRIBED" ? "text-green-400 border-green-400" : "text-red-400 border-red-400";
 
   return (
     <div className="flex min-h-screen bg-gray-900 text-white relative">
@@ -108,7 +108,7 @@ export default function Profile() {
             <span
               className={`px-3 py-1 rounded-full text-sm font-medium bg-gray-700 ${subscriptionColor} border ${subscriptionColor}`}
             >
-              {profile.subscriptionStatus === "ACTIVE" ? "Subscribed" : "Not Active"}
+              {profile.subscriptionStatus === "SUBSCRIBED" ? "Subscribed" : "inActive"}
             </span>
           </div>
 
@@ -171,7 +171,7 @@ export default function Profile() {
               <p>
                 <span className="font-semibold text-gray-400">Subscription Status: </span>
                 <span className={subscriptionColor}>
-                  {profile.subscriptionStatus === "ACTIVE" ? "Subscribed" : "Not Active"}
+                  {profile.subscriptionStatus === "SUBSCRIBED" ? "Subscribed" : "inActive"}
                 </span>
               </p>
             </div>

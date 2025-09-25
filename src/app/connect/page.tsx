@@ -18,6 +18,9 @@ export default function TradeDetailsPage() {
 
   const [loading, setLoading] = useState(true);
 
+  // ✅ Button state
+  const [connectStatus, setConnectStatus] = useState<"idle" | "loading" | "success">("idle");
+
   // Fetch trade details on mount
   useEffect(() => {
     async function fetchDetails() {
@@ -35,7 +38,6 @@ export default function TradeDetailsPage() {
     fetchDetails();
   }, []);
 
-  // ✅ Logout function passed to Sidebar
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -43,6 +45,7 @@ export default function TradeDetailsPage() {
   };
 
   const handleSave = async () => {
+    setConnectStatus("loading");
     try {
       const newDetails: TradeDetails = {
         tradeServer,
@@ -51,10 +54,19 @@ export default function TradeDetailsPage() {
       };
       await saveTradeDetails(newDetails);
       console.log("Trade details saved successfully");
-      setModalOpen(false);
+
+      // ✅ Show success
+      setConnectStatus("success");
+
+      // Reset modal & button after 2s
+      setTimeout(() => {
+        setModalOpen(false);
+        setConnectStatus("idle");
+      }, 2000);
     } catch (err) {
       console.error("Failed to save trade details", err);
       alert("Failed to save trade details");
+      setConnectStatus("idle");
     }
   };
 
@@ -82,7 +94,6 @@ export default function TradeDetailsPage() {
 
       {/* Main content */}
       <main className="flex-1 p-6 md:p-8 space-y-8 overflow-y-auto ml-0 md:ml-64">
-        {/* Top bar with hamburger */}
         <div className="flex items-center justify-between md:hidden mb-4">
           <button
             className="p-3 bg-gray-800 rounded-md"
@@ -125,14 +136,9 @@ export default function TradeDetailsPage() {
 
       {/* Modal */}
       {modalOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
-          aria-modal="true"
-          role="dialog"
-          aria-labelledby="modal-title"
-        >
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
           <div className="bg-gray-800 rounded-lg shadow-lg w-full max-w-md p-6">
-            <h2 id="modal-title" className="text-xl font-semibold text-blue-400 mb-4">
+            <h2 className="text-xl font-semibold text-blue-400 mb-4">
               Change Trading Details
             </h2>
             <form
@@ -191,9 +197,20 @@ export default function TradeDetailsPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 transition font-semibold text-white"
+                  disabled={connectStatus === "loading"}
+                  className={`px-4 py-2 rounded-md font-semibold text-white transition ${
+                    connectStatus === "loading"
+                      ? "bg-gray-600 cursor-not-allowed"
+                      : connectStatus === "success"
+                      ? "bg-green-500 hover:bg-green-600"
+                      : "bg-blue-500 hover:bg-blue-600"
+                  }`}
                 >
-                  Connect
+                  {connectStatus === "loading"
+                    ? "Connecting..."
+                    : connectStatus === "success"
+                    ? "Connected"
+                    : "Connect"}
                 </button>
               </div>
             </form>

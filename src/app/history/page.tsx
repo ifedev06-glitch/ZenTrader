@@ -85,12 +85,12 @@ export default function () {
           <h1 className="text-2xl font-bold">Trade History</h1>
           <span
             className={`px-3 py-1 rounded-full text-sm font-medium ${
-              profile?.subscriptionStatus === "ACTIVE"
+              profile?.subscriptionStatus === "SUBSCRIBED"
                 ? "bg-gray-700 text-green-400 border border-green-400"
                 : "bg-gray-700 text-red-400 border border-red-400"
             }`}
           >
-            {profile?.subscriptionStatus === "ACTIVE" ? "Subscribed" : "Not Active"}
+            {profile?.subscriptionStatus === "SUBSCRIBED" ? "Subscribed" : "InActive"}
           </span>
         </div>
 
