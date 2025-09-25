@@ -47,7 +47,7 @@ export default function LoginPage() {
               ZenTrader <span className="text-indigo-500">Pro</span>
             </h1>
           </div>
-          <p className="text-gray-400 text-sm">Making you money while you sleep</p>
+          <p className="text-gray-400 text-sm">Your AI powered trading Partner</p>
         </div>
 
         {/* Form */}
